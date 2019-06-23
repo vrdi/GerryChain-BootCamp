@@ -90,6 +90,7 @@ partition_GOP = Partition(graph, "538GOP_PL", updaters)
 partition_8th = Partition(graph, "8THGRADE_1", updaters)
 tree_partitions = []
 for i in range(10):
+    print('Finished {i} tree plan(s)')
     cddict =  recursive_tree_part(graph,range(18),df["TOT_POP"].sum()/18,"TOT_POP", .01,1)
     tree_partitions.append(Partition(graph, cddict, updaters))
 
