@@ -33,12 +33,6 @@ plot_path = "./Data/VTD_FINAL.shp"
 df = gpd.read_file(plot_path)
 
 
-def num_splits(partition):
-    df["current"] = df[unique_label].map(dict(partition.assignment))
-    splits = sum(df.groupby("COUNTYFP10")["current"].nunique() > 1)
-    return splits
-
-
 unique_label = "GEOID10"
 pop_col = "TOT_POP"
 district_col = "2011_PLA_1"
