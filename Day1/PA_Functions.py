@@ -79,19 +79,34 @@ election_updaters = {election.name: election for election in elections}
 updaters.update(election_updaters)
 
 
-initial_partition = Partition(graph, "2011_PLA_1", updaters)
+partition_2011 = Partition(graph, "2011_PLA_1", updaters)
+partition_GOV = Partition(graph, "GOV", updaters)
+partition_TS = Partition(graph, "TS", updaters)
+partition_REMEDIAL = Partition(graph, "REMEDIAL_P", updaters)
+partition_CPCT = Partition(graph, "538CPCT__1", updaters)
+partition_DEM = Partition(graph, "538DEM_PL", updaters)
+partition_GOP = Partition(graph, "538GOP_PL", updaters)
+partition_8th = Partition(graph, "8THGRADE_1", updaters)
+tree_partitions = []
+for i in range(10):
+    cddict =  recursive_tree_part(graph,range(18),df["TOT_POP"].sum()/18,"TOT_POP", .01,1)
+    tree_partitions.append(Partition(graph, cddict, updaters))
 
-#Other possible starting plans are: 
-#"2011_PLA_1": Congressional district ID in 2011 enacted congressional map
-#"GOV": Congressional district ID in Governor’s counter-proposed plan
-#"TS": Congressional district ID in Turzai-Scarnati Plan
-#"REMEDIAL_P": Congressional district ID in 2018 enacted remedial plan
-#"538CPCT__1": Congressional district ID in 538’s compactness favoring plan
-#"538DEM_PL": Congressional district ID in 538’s Democratic favoring plan
-#"538GOP_PL": Congressional district ID in 538’s Republican favoring plan
-#"8THGRADE_1": Congressional district ID in Jon Kimmel’s eighth grade class’s second redistricting plan
+    
+    
+print("The 2011 plan has" , len(partition_2011["cut_edges"]), "cut edges.")
+print("The GOV plan has" , len(partition_GOV["cut_edges"]), "cut edges.")
+print("The TS plan has" , len(partition_TS["cut_edges"]), "cut edges.")
+print("The REMEDIAL plan has" , len(partition_REMEDIAL["cut_edges"]), "cut edges.")
+print("The 538 Compact plan has" , len(partition_CPCT["cut_edges"]), "cut edges.")
+print("The 538 DEM plan has" , len(partition_DEM["cut_edges"]), "cut edges.")
+print("The 538 GOP plan has" , len(partition_GOP["cut_edges"]), "cut edges.")
+print("The 8th grade plan has" , len(partition_8th["cut_edges"]), "cut edges.")
+for i in range(10):
+    print(f"Tree plan #{i} has" , len(tree_partitions[i]["cut_edges"]), "cut edges.")
 
-#FUNCTION GO HERE
+
+#NEW FUNCTIONs GO HERE
 
     
     
