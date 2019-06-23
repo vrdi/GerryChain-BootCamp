@@ -116,8 +116,8 @@ partition_DEM,partition_GOP,partition_8th]
 partition_list = partition_list + tree_partitions
     
 plt.figure()
-plt.plot(range(18), [len(x["cut_edges"]) for x in partition_list], 'o',color='hotpink',markersize = 5)
+plt.plot(range(13), [len(x["cut_edges"]) for x in partition_list], 'o',color='hotpink',markersize = 20)
 plt.ylabel("# of cut edges")
-plt.xticks(range(18), ('2011','GOV','TS','REMEDIAL','CPCT','DEM',
+plt.xticks(range(13), ('2011','GOV','TS','REMEDIAL','CPCT','DEM',
            'GOP','8th','Tree1','Tree2','Tree3','Tree4','Tree5'))
 plt.show()
