@@ -18,6 +18,7 @@ from gerrychain import (
 from gerrychain.metrics import efficiency_gap, mean_median
 from gerrychain.proposals import recom
 from gerrychain.updaters import cut_edges
+from gerrychain.tree import recursive_tree_part
 
 newdir = "./Outputs/"
 os.makedirs(os.path.dirname(newdir + "init.txt"), exist_ok=True)
@@ -43,7 +44,7 @@ pop_col = "TOT_POP"
 district_col = "2011_PLA_1"
 county_col = "COUNTYFP10"
 
-num_elections = 14
+num_elections = 3
 
 
 election_names = [
