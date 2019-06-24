@@ -93,20 +93,6 @@ for i in range(tree_steps):
     cddict = recursive_tree_part(graph, range(18), df["TOT_POP"].sum() / 18, "TOT_POP", .01, 1)
     tree_partitions.append(Partition(graph, cddict, updaters))
 
-print("The 2011 plan has" , len(partition_2011["cut_edges"]), "cut edges.")
-print("The GOV plan has" , len(partition_GOV["cut_edges"]), "cut edges.")
-print("The TS plan has" , len(partition_TS["cut_edges"]), "cut edges.")
-print("The REMEDIAL plan has" , len(partition_REMEDIAL["cut_edges"]), "cut edges.")
-print("The 538 Compact plan has" , len(partition_CPCT["cut_edges"]), "cut edges.")
-print("The 538 DEM plan has" , len(partition_DEM["cut_edges"]), "cut edges.")
-print("The 538 GOP plan has" , len(partition_GOP["cut_edges"]), "cut edges.")
-print("The 8th grade plan has" , len(partition_8th["cut_edges"]), "cut edges.")
-
-for i in range(tree_steps):
-    print("Tree plan", i, "cut edges:" , len(tree_partitions[i]["cut_edges"]))
-
-# NEW FUNCTIONS GO HERE
-
 partition_list = [partition_2011, partition_GOV, partition_TS,
                   partition_REMEDIAL, partition_CPCT, partition_DEM,
                   partition_GOP, partition_8th]
@@ -117,6 +103,8 @@ n_plans = tree_steps + n_base_plans
 
 plt.figure()
 
+# NEW FUNCTIONS GO HERE
+
 
 def cut_edges_metric(part):
     return len(part["cut_edges"])
@@ -126,7 +114,22 @@ def eg_metric(part):
     return efficiency_gap(part["whatever-goes-here"])
 
 
-ys = [eg_metric(part) for part in partition_list]
+print("The 2011 plan has", cut_edges_metric(partition_2011) , "cut edges.")
+print("The GOV plan has", cut_edges_metric(partition_GOV), "cut edges.")
+print("The TS plan has", cut_edges_metric(partition_TS), "cut edges.")
+print("The REMEDIAL plan has", cut_edges_metric(partition_REMEDIAL), "cut edges.")
+print("The 538 Compact plan has", cut_edges_metric(partition_CPCT), "cut edges.")
+print("The 538 DEM plan has", cut_edges_metric(partition_DEM), "cut edges.")
+print("The 538 GOP plan has", cut_edges_metric(partition_GOP), "cut edges.")
+print("The 8th grade plan has", cut_edges_metric(partition_8th), "cut edges.")
+
+for i in range(tree_steps):
+    print("Tree plan", i, "cut edges:" , len(tree_partitions[i]["cut_edges"]))
+
+
+# PLOTTING
+
+ys = [cut_edges_metric(part) for part in partition_list]
 
 plt.plot(ys, 'o', color='hotpink', markersize=20)
 
