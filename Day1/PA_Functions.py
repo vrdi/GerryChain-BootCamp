@@ -85,7 +85,7 @@ partition_8th = Partition(graph, "8THGRADE_1", updaters)
 
 tree_partitions = []
 
-tree_steps = 2
+tree_steps = 5
 n_base_plans = 8
 
 for i in range(tree_steps):
