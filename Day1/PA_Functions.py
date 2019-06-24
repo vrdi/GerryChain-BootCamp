@@ -85,10 +85,10 @@ partition_8th = Partition(graph, "8THGRADE_1", updaters)
 
 tree_partitions = []
 
-tree_steps = 5
+tree_plans = 5
 n_base_plans = 8
 
-for i in range(tree_steps):
+for i in range(tree_plans):
     print('Finished tree plan', i)
     cddict = recursive_tree_part(graph, range(18), df["TOT_POP"].sum() / 18, "TOT_POP", .01, 1)
     tree_partitions.append(Partition(graph, cddict, updaters))
@@ -99,7 +99,7 @@ partition_list = [partition_2011, partition_GOV, partition_TS,
 
 partition_list = partition_list + tree_partitions
 
-n_plans = tree_steps + n_base_plans
+n_plans = tree_plans + n_base_plans
 
 plt.figure()
 
@@ -123,8 +123,8 @@ print("The 538 DEM plan has", cut_edges_metric(partition_DEM), "cut edges.")
 print("The 538 GOP plan has", cut_edges_metric(partition_GOP), "cut edges.")
 print("The 8th grade plan has", cut_edges_metric(partition_8th), "cut edges.")
 
-for i in range(tree_steps):
-    print("Tree plan", i, "cut edges:" , len(tree_partitions[i]["cut_edges"]))
+for i in range(tree_plans):
+    print("Tree plan", i + 1, "cut edges:" , cut_edges_metric(tree_partitions[i]))
 
 
 # PLOTTING
@@ -135,7 +135,7 @@ plt.plot(ys, 'o', color='hotpink', markersize=20)
 
 plt.ylabel("# of cut edges")
 
-labels = ['2011', 'GOV', 'TS', 'REMEDIAL', 'CPCT', 'DEM', 'GOP', '8th'] + ["Tree" + str(k + 1) for k in range(tree_steps)]
+labels = ['2011', 'GOV', 'TS', 'REMEDIAL', 'CPCT', 'DEM', 'GOP', '8th'] + ["Tree" + str(k + 1) for k in range(tree_plans)]
 
 plt.xticks(range(len(labels)), labels)
 
