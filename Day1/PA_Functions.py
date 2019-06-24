@@ -82,36 +82,61 @@ partition_CPCT = Partition(graph, "538CPCT__1", updaters)
 partition_DEM = Partition(graph, "538DEM_PL", updaters)
 partition_GOP = Partition(graph, "538GOP_PL", updaters)
 partition_8th = Partition(graph, "8THGRADE_1", updaters)
+
 tree_partitions = []
-for i in range(5):
-    print(f'Finished {i} tree plan(s)')
-    cddict =  recursive_tree_part(graph,range(18),df["TOT_POP"].sum()/18,"TOT_POP", .01,1)
+
+tree_plans = 5
+n_base_plans = 8
+
+for i in range(tree_plans):
+    print('Finished tree plan', i)
+    cddict = recursive_tree_part(graph, range(18), df["TOT_POP"].sum() / 18, "TOT_POP", .01, 1)
     tree_partitions.append(Partition(graph, cddict, updaters))
 
-    
-    
-print("The 2011 plan has" , len(partition_2011["cut_edges"]), "cut edges.")
-print("The GOV plan has" , len(partition_GOV["cut_edges"]), "cut edges.")
-print("The TS plan has" , len(partition_TS["cut_edges"]), "cut edges.")
-print("The REMEDIAL plan has" , len(partition_REMEDIAL["cut_edges"]), "cut edges.")
-print("The 538 Compact plan has" , len(partition_CPCT["cut_edges"]), "cut edges.")
-print("The 538 DEM plan has" , len(partition_DEM["cut_edges"]), "cut edges.")
-print("The 538 GOP plan has" , len(partition_GOP["cut_edges"]), "cut edges.")
-print("The 8th grade plan has" , len(partition_8th["cut_edges"]), "cut edges.")
-for i in range(5):
-    print(f"Tree plan #{i} has" , len(tree_partitions[i]["cut_edges"]), "cut edges.")
-
-
-#NEW FUNCTIONs GO HERE
-
-partition_list = [partition_2011,partition_GOV,partition_TS,partition_REMEDIAL,partition_CPCT,
-partition_DEM,partition_GOP,partition_8th]
+partition_list = [partition_2011, partition_GOV, partition_TS,
+                  partition_REMEDIAL, partition_CPCT, partition_DEM,
+                  partition_GOP, partition_8th]
 
 partition_list = partition_list + tree_partitions
-    
+
+n_plans = tree_plans + n_base_plans
+
 plt.figure()
-plt.plot(range(13), [len(x["cut_edges"]) for x in partition_list], 'o',color='hotpink',markersize = 20)
+
+# NEW FUNCTIONS GO HERE
+
+
+def cut_edges_metric(part):
+    return len(part["cut_edges"])
+
+
+def eg_metric(part):
+    return efficiency_gap(part["whatever-goes-here"])
+
+
+print("The 2011 plan has", cut_edges_metric(partition_2011) , "cut edges.")
+print("The GOV plan has", cut_edges_metric(partition_GOV), "cut edges.")
+print("The TS plan has", cut_edges_metric(partition_TS), "cut edges.")
+print("The REMEDIAL plan has", cut_edges_metric(partition_REMEDIAL), "cut edges.")
+print("The 538 Compact plan has", cut_edges_metric(partition_CPCT), "cut edges.")
+print("The 538 DEM plan has", cut_edges_metric(partition_DEM), "cut edges.")
+print("The 538 GOP plan has", cut_edges_metric(partition_GOP), "cut edges.")
+print("The 8th grade plan has", cut_edges_metric(partition_8th), "cut edges.")
+
+for i in range(tree_plans):
+    print("Tree plan", i + 1, "cut edges:" , cut_edges_metric(tree_partitions[i]))
+
+
+# PLOTTING
+
+ys = [cut_edges_metric(part) for part in partition_list]
+
+plt.plot(ys, 'o', color='hotpink', markersize=20)
+
 plt.ylabel("# of cut edges")
-plt.xticks(range(13), ('2011','GOV','TS','REMEDIAL','CPCT','DEM',
-           'GOP','8th','Tree1','Tree2','Tree3','Tree4','Tree5'))
+
+labels = ['2011', 'GOV', 'TS', 'REMEDIAL', 'CPCT', 'DEM', 'GOP', '8th'] + ["Tree" + str(k + 1) for k in range(tree_plans)]
+
+plt.xticks(range(len(labels)), labels)
+
 plt.show()
