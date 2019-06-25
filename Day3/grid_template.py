@@ -246,13 +246,13 @@ for z in range(4):
 
     plt.subplot(2, 2, 3)
     plt.hist(lists[z][0])
-    plt.title("ReCom Ensemble")
+    plt.title("Bad Ensemble")
 
     plt.subplot(2, 2, 2)
     plt.plot(lists[z][1])
 
     plt.subplot(2, 2, 4)
     plt.hist(lists[z][1])
-    plt.title("Boundary Flip Ensemble")
+    plt.title("Mediorce Ensemble")
 
 plt.show()
