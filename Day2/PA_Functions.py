@@ -42,13 +42,11 @@ num_elections = 3
 
 
 election_names = [
-    "BPOP"
     "PRES12",
     "PRES16",
     "SENW101216",
 ]
 election_columns = [
-    ["BPOP","nBPOP"],
     ["PRES12D", "PRES12R"],
     ["T16PRESD", "T16PRESR"],
     ["W101216D", "W101216R"],
@@ -61,6 +59,7 @@ graph = Graph.from_json(graph_path)
 updaters = {
     "population": updaters.Tally("TOT_POP", alias="population"),
     "cut_edges": cut_edges,
+    "BPOP":Election("BPOP",{"BPOP":"BPOP","nBPOP":"nBPOP"})
 }
 
 elections = [
