@@ -42,11 +42,13 @@ num_elections = 3
 
 
 election_names = [
+    "BPOP"
     "PRES12",
     "PRES16",
     "SENW101216",
 ]
 election_columns = [
+    ["BPOP","nBPOP"],
     ["PRES12D", "PRES12R"],
     ["T16PRESD", "T16PRESR"],
     ["W101216D", "W101216R"],
@@ -104,6 +106,10 @@ for i in range(5):
     print(f"Tree plan #{i} has" , len(tree_partitions[i]["cut_edges"]), "cut edges.")
 
 
+    
+def bpop_packed(partition):
+    return max(partition["BPOP"].percents("BPOP")) < .6
+    
 #NEW FUNCTIONs GO HERE
 
 partition_list = [partition_2011,partition_GOV,partition_TS,partition_REMEDIAL,partition_CPCT,
