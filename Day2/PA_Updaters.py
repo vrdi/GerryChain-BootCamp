@@ -102,8 +102,11 @@ proposal = partial(
     recom, pop_col="TOT_POP", pop_target=ideal_population, epsilon=0.02, node_repeats=2
 )
 
+def cut_length(partition):
+    return len(partition["cut_edges"])
+
 compactness_bound = constraints.UpperBound(
-    lambda p: len(p["cut_edges"]), 2 * len(initial_partition["cut_edges"])
+    cut_length, 2 * cut_length(initial_partition)
 )
 
 chain = MarkovChain(
