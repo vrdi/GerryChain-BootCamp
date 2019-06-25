@@ -74,6 +74,8 @@ election_updaters = {election.name: election for election in elections}
 updaters.update(election_updaters)
 
 
+
+
 partition_2011 = Partition(graph, "2011_PLA_1", updaters)
 partition_GOV = Partition(graph, "GOV", updaters)
 partition_TS = Partition(graph, "TS", updaters)
