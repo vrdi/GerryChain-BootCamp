@@ -30,7 +30,7 @@ import networkx as nx
 def num_splits(partition):
     df["current"] = df[unique_label].map(dict(partition.assignment))
     splits = sum(df.groupby("COUNTY?")["current"].nunique() > 1)
-return splits
+    return splits
 
 def create_graph():
     graph = nx.grid_graph([k * gn, k * gn])
@@ -48,7 +48,7 @@ def create_graph():
         graph.node[n]["part_sum"] = cddict[n]
         graph.node[n]["last_flipped"] = 0
         graph.node[n]["num_flips"] = 0
-        graph.node[n]["COUNTY1"] = (-1)**() *int(x[0] / gn)
+        graph.node[n]["COUNTY1"] = (-1)**(int(n[1]<k*gn/2)) *int(n[0] / gn)
 
         if random.random() < p:
             graph.node[n]["pink"] = 1
@@ -274,7 +274,7 @@ for exp_num in [40, 20, 1]:  # range(22,31):
             Validator([single_flip_contiguous, popbound]),
             accept=annealing_cut_accept2,  # aca,#cut_accept,#always_accept,#
             initial_state=gp,
-            total_steps=500000,
+            total_steps=500,
         )
 
         pos_dict = {n: n for n in graph.nodes()}
@@ -359,10 +359,7 @@ for exp_num in [40, 20, 1]:  # range(22,31):
         plt.title("Cut Lengths")
         plt.plot(cuts)
 
-        plt.savefig(
-            "./plots/complicated/cuts_" + str(exp_num) + "_" + str(pop_bal) + "pop.png"
-        )
-        plt.close()
+        plt.show()
 
         plt.figure()
         plt.title("Cut Lengths")
