@@ -24,8 +24,13 @@ from gerrychain.constraints import (
 from gerrychain.accept import always_accept
 from gerrychain.updaters import Tally, cut_edges
 from gerrychain.partition import Partition
+from gerrychain.tree import recursive_tree_part
 import networkx as nx
 
+def num_splits(partition):
+    df["current"] = df[unique_label].map(dict(partition.assignment))
+    splits = sum(df.groupby("COUNTY?")["current"].nunique() > 1)
+return splits
 
 def create_graph():
     graph = nx.grid_graph([k * gn, k * gn])
@@ -38,12 +43,12 @@ def create_graph():
     )
 
     cddict = {x: int(x[0] / gn) for x in graph.nodes()}
-
     for n in graph.nodes():
         graph.node[n]["population"] = 1
         graph.node[n]["part_sum"] = cddict[n]
         graph.node[n]["last_flipped"] = 0
         graph.node[n]["num_flips"] = 0
+        graph.node[n]["COUNTY1"] = (-1)**() *int(x[0] / gn)
 
         if random.random() < p:
             graph.node[n]["pink"] = 1
@@ -57,6 +62,12 @@ def create_graph():
 
         else:
             graph.node[n]["boundary_node"] = False
+            
+    countydict = recursive_tree_part(graph,range(15),len(graph.nodes())/15,"population", .1,1)
+    
+    for n in graph.nodes():
+        graph.node[n]["COUNTY2"] = countydict[n]
+
 
     # this part adds queen adjacency
     # for i in range(gn-1):
