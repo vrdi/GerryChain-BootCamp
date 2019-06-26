@@ -30,11 +30,23 @@ def bad_proposal(partition):
     
 def mediocre_proposal(partition):  
     flip_label = random.choice(list(partition.parts))    
-    flips = {}>>>     
+    flips = {}
     for node in partition.graph.nodes():         
         if partition.assignment[node] == flip_label:            
-            flips[node] = random.choice(list(partition.assignment[x] for x in partition.graph.neighbors(node)]))     
+            flips[node] = random.choice([partition.assignment[x] for x in partition.graph.neighbors(node)]))     
     return partition.flip(flips)    
+
+
+def uniform_proposal(partition):
+    flip = random.choice(list(partition["b_nodes"]))
+    
+    return partition.flip({flip[0]: flip[1]})
+
+
+def b_nodes(partition):
+    return {(x[0], partition.assignment[x[1]]) for x in partition["cut_edges"]
+               }.union({(x[1], partition.assignment[x[0]]) for x in partition["cut_edges"]})
+
 
 # BUILD GRAPH
 
@@ -120,6 +132,7 @@ updaters = {
     "cut_edges": cut_edges,
     "step_num": step_num,
     "Pink-Purple": Election("Pink-Purple", {"Pink": "pink", "Purple": "purple"}),
+    'b_nodes':b_nodes,
 }
 
 
