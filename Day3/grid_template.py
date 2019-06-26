@@ -54,7 +54,7 @@ gn = 2
 k = 4
 ns = 50
 p = 0.5
-
+q = .4
 graph = nx.grid_graph([k * gn, k * gn])
 
 
@@ -67,6 +67,14 @@ for n in graph.nodes():
     else:
         graph.node[n]["pink"] = 0
         graph.node[n]["purple"] = 1
+    
+    if n[0] < k*gn*q:
+        graph.node["green"] = 1
+        graph.node["yellow"] = 0
+    else:
+        graph.node["green"] = 0
+        graph.node["yellow"] = 1
+       
     if 0 in n or k * gn - 1 in n:
         graph.node[n]["boundary_node"] = True
         graph.node[n]["boundary_perim"] = 1
@@ -132,6 +140,7 @@ updaters = {
     "cut_edges": cut_edges,
     "step_num": step_num,
     "Pink-Purple": Election("Pink-Purple", {"Pink": "pink", "Purple": "purple"}),
+        "Green-Yellow": Election("Green-Yellow", {"green": "green", "yellow": "yellow"}),
     'b_nodes':b_nodes,
 }
 
