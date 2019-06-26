@@ -272,10 +272,19 @@ for exp_num in [40, 20, 1]:  # range(22,31):
         gchain = MarkovChain(
             slow_reversible_propose,  # propose_random_flip,#propose_chunk_flip, # ,
             Validator([single_flip_contiguous, popbound]),
-            accept=annealing_cut_accept2,  # aca,#cut_accept,#always_accept,#
+            accept=always_accept,#
             initial_state=gp,
-            total_steps=500000,
+            total_steps=5000,
         )
+        
+        #UNCOMMENT THIS FOR ANNEALING
+        #gchain = MarkovChain(
+        #    slow_reversible_propose,  # propose_random_flip,#propose_chunk_flip, # ,
+        #    Validator([single_flip_contiguous, popbound]),
+        #    accept=annealing_cut_accept2,  # aca,#cut_accept,#always_accept,#
+        #    initial_state=gp,
+        #    total_steps=500000,
+        #)
 
         pos_dict = {n: n for n in graph.nodes()}
         pos = pos_dict
@@ -318,7 +327,7 @@ for exp_num in [40, 20, 1]:  # range(22,31):
                     node_shape="s",
                     cmap="tab20",
                 )
-                plt.title("Ending Point")
+                plt.title("Middle Point")
                 plt.show()
             # print(t)
 
