@@ -274,7 +274,7 @@ for exp_num in [40, 20, 1]:  # range(22,31):
             Validator([single_flip_contiguous, popbound]),
             accept=annealing_cut_accept2,  # aca,#cut_accept,#always_accept,#
             initial_state=gp,
-            total_steps=500,
+            total_steps=500000,
         )
 
         pos_dict = {n: n for n in graph.nodes()}
